@@ -1,7 +1,44 @@
-    1.  Add a Input field which updates a property ('username') via Two-Way-Binding
-    2.  Output the username property via String Interpolation (in a paragraph below the input)
-    3.  Add a button which may only be clicked if the username is NOT an empty string
-    4.  Upon clicking the button, the username should be reset to an empty string
-
-
-
+<mat-vertical-stepper [linear]="isLinear" #stepper="matVerticalStepper">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Add a Input field which updates a property ('username') via Two-Way-Binding</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="username" [(ngModel)]="username">
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Output the username property via String Interpolation (in a paragraph below the input)</ng-template>
+      <mat-form-field>
+        <p>{{username}}</p>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormControl">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Add a button which may only be clicked if the username is NOT an empty string</ng-template>
+      <ng-template matStepLabel>Upon clicking the button, the username should be reset to an empty string</ng-template>
+        <mat-form-field>
+            <div>
+                <button mat-button (click)="onCheckUsername($event)">Reset INPUT</button>
+            </div>
+        </mat-form-field>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
